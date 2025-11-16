@@ -5,18 +5,18 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity//сущность
-public class ToDoItem {
+public class TodoItem {
 
     @Id
     @GeneratedValue
     private Long id;
     private String title;
 
-    public ToDoItem(String title) {
+    public TodoItem(String title) {
         this.title = title;
     }
 
-    public ToDoItem() {
+    public TodoItem() {
     }
 
     public Long getId() {

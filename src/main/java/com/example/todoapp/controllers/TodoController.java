@@ -1,11 +1,13 @@
 package com.example.todoapp.controllers;
 
-import com.example.todoapp.model.ToDoItem;
+import com.example.todoapp.model.TodoItem;
 import com.example.todoapp.repositories.TodoItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -21,17 +23,23 @@ public class TodoController implements CommandLineRunner {
     @GetMapping
     public String index(Model model) {
 
-        List<ToDoItem> allTodos = todoItemRepository.findAll();
+        List<TodoItem> allTodos = todoItemRepository.findAll();
         model.addAttribute("allTodos", allTodos);
-        model.addAttribute("newTodo", new ToDoItem());
+        model.addAttribute("newTodo", new TodoItem());
 
         return "index";
     }
 
+    @PostMapping("/add")
+    public String add(@ModelAttribute TodoItem todoItem){
+        todoItemRepository.save(todoItem);
+        return "redirect:/";
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        // Записываем два объекта ToDoItem в нашу базу данных
-        todoItemRepository.save(new ToDoItem("Item 1"));
-        todoItemRepository.save(new ToDoItem("Item 2"));
+        // Записываем два объекта TodoItem в нашу базу данных
+        todoItemRepository.save(new TodoItem("Item 1"));
+        todoItemRepository.save(new TodoItem("Item 2"));
     }
 }
